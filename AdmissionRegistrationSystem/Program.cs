@@ -1,4 +1,10 @@
+using AdmissionRegistrationSystem.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<ARSDBContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ARSDBContext") ?? throw new InvalidOperationException("Connection string 'ARSDBContext' not found.")));
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
