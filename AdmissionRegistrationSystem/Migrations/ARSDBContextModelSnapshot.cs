@@ -46,7 +46,7 @@ namespace AdmissionRegistrationSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Logins");
+                    b.ToTable("Logins", (string)null);
                 });
 #pragma warning restore 612, 618
         }
