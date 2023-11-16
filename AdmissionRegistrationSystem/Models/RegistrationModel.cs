@@ -24,12 +24,18 @@ namespace AdmissionRegistrationSystem.Models
 
         [StringLength(255)]
         public string College { get; set; }
-       
+
+        public int PermAddressId { get; set; }
+
+
         public AddressInfoModel PermAddress { get; set; }
-       
+
+        public int PresAddressId { get; set; }
+
+
         public AddressInfoModel PresAddress { get; set; }
 
-        [StringLength(255)]
+        [StringLength(63)]
         public string DOB { get; set;}
 
         [StringLength(63)]
@@ -44,7 +50,12 @@ namespace AdmissionRegistrationSystem.Models
         [StringLength(63)]
         public string NID { get; set;}
 
+        public int SSCId { get; set; }
+
         public PublicExamInfoModel SSC { get; set; }
+
+        public int HSCId { get; set; }
+
         public PublicExamInfoModel HSC { get; set; }
 
     }

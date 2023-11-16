@@ -6,8 +6,6 @@ namespace AdmissionRegistrationSystem.Models
     {
         public int Id { get; set; }
 
-        public Guid SId { get; set; }
-
         [StringLength(63)]
         public string ExamType { get; set; }
 
