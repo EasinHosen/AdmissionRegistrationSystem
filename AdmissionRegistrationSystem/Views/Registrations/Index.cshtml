@@ -1,70 +1,67 @@
 ﻿@model AdmissionRegistrationSystem.Models.RegistrationModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Registration";
 }
 
-<h1>Index</h1>
 
-<h4>RegistrationModel</h4>
+<h4>Registration Form</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Index">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="regId" class="control-label"></label>
                 <input asp-for="regId" class="form-control" />
                 <span asp-validation-for="regId" class="text-danger"></span>
-            </div>
+            </div> *@
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="PhotoUrl" class="control-label"></label>
                 <input asp-for="PhotoUrl" class="form-control" />
                 <span asp-validation-for="PhotoUrl" class="text-danger"></span>
-            </div>
+            </div> *@
             <div class="form-group">
-                <label asp-for="FName" class="control-label"></label>
+                <label asp-for="FName" class="control-label">Father's name</label>
                 <input asp-for="FName" class="form-control" />
                 <span asp-validation-for="FName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MName" class="control-label"></label>
+                <label asp-for="MName" class="control-label">Mother's name</label>
                 <input asp-for="MName" class="form-control" />
                 <span asp-validation-for="MName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="School" class="control-label"></label>
-                <input asp-for="School" class="form-control" />
-                <span asp-validation-for="School" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="College" class="control-label"></label>
-                <input asp-for="College" class="form-control" />
-                <span asp-validation-for="College" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PermAddressId" class="control-label"></label>
-                <select asp-for="PermAddressId" class ="form-control" asp-items="ViewBag.PermAddressId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="PresAddressId" class="control-label"></label>
-                <select asp-for="PresAddressId" class ="form-control" asp-items="ViewBag.PresAddressId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="DOB" class="control-label"></label>
-                <input asp-for="DOB" class="form-control" />
+                <label asp-for="DOB"
+                       class="control-label">Date of Birth</label>
+                <input type="date"
+                       asp-for="DOB"
+                       class="form-control" format="dd/MM/yyyy" />
                 <span asp-validation-for="DOB" class="text-danger"></span>
             </div>
+            @* <script>
+                const today = new Date();
+                const minDate = new Date();
+                minDate.setFullYear(today.getFullYear() - 18);
+
+                const datePicker = document.getElementById('DOB');
+                datePicker.setAttribute('min', minDate.toISOString().split('T')[0]);
+            </script> *@
             <div class="form-group">
-                <label asp-for="Gender" class="control-label"></label>
-                <input asp-for="Gender" class="form-control" />
+                <label asp-for="Gender" class="control-label">Gender</label>
+                <select asp-for="Gender" class="form-control">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
                 <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Phone" class="control-label"></label>
                 <input asp-for="Phone" class="form-control" />
@@ -80,23 +77,122 @@
                 <input asp-for="NID" class="form-control" />
                 <span asp-validation-for="NID" class="text-danger"></span>
             </div>
+            @* <div class="form-group">
+                <label asp-for="PresAddress.Provience" class="control-label">Provience(present)</label>
+                <input asp-for="PresAddress.Provience" class="form-control" />
+                <span asp-validation-for="PresAddress.Provience" class="text-danger"></span>
+            </div><div class="form-group">
+                <label asp-for="PresAddress.City" class="control-label">City(present)</label>
+                <input asp-for="PresAddress.City" class="form-control" />
+                <span asp-validation-for="PresAddress.City" class="text-danger"></span>
+            </div><div class="form-group">
+                <label asp-for="PresAddress.Area" class="control-label">Area(present)</label>
+                <input asp-for="PresAddress.Area" class="form-control" />
+                <span asp-validation-for="PresAddress.Area" class="text-danger"></span>
+            </div> *@
             <div class="form-group">
-                <label asp-for="SSCId" class="control-label"></label>
-                <select asp-for="SSCId" class ="form-control" asp-items="ViewBag.SSCId"></select>
+                <label asp-for="PermAddress.Provience" class="control-label">Provience</label>
+                <input asp-for="PermAddress.Provience" class="form-control" />
+                <span asp-validation-for="PermAddress.Provience" class="text-danger"></span>
+            </div><div class="form-group">
+                <label asp-for="PermAddress.City" class="control-label">City</label>
+                <input asp-for="PermAddress.City" class="form-control" />
+                <span asp-validation-for="PermAddress.City" class="text-danger"></span>
+            </div><div class="form-group">
+                <label asp-for="PermAddress.Area" class="control-label">Area</label>
+                <input asp-for="PermAddress.Area" class="form-control" />
+                <span asp-validation-for="PermAddress.Area" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="HSCId" class="control-label"></label>
-                <select asp-for="HSCId" class ="form-control" asp-items="ViewBag.HSCId"></select>
+                <label asp-for="School" class="control-label"></label>
+                <input asp-for="School" class="form-control" />
+                <span asp-validation-for="School" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <label asp-for="SSC.Board" class="control-label">SSC Board</label>
+                <select asp-for="SSC.Board" class="form-control" placeholder="Select one">
+                    
+                    <option value="Mymensignh">Mymensignh</option>
+                    <option value="Dhaka">Dhaka</option>
+                    <option value="Rajshahi">Rajshahi</option>
+                    <option value="BTEB">BTEB</option>
+                </select>
+                <span asp-validation-for="SSC.Board" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SSC.Roll" class="control-label">SSC Roll</label>
+                <input asp-for="SSC.Roll" class="form-control" />
+                <span asp-validation-for="SSC.Roll" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SSC.Section" class="control-label">Section</label>
+                <select asp-for="SSC.Section" class="form-control" placeholder="---Select one---">
+                    <option value="Science">Science</option>
+                    <option value="Arts">Arts</option>
+                    <option value="Commerce">Commerce</option>
+                    <option value="Vocational">Vocational</option>
+                </select>
+                <span asp-validation-for="SSC.Section" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SSC.Result" class="control-label">SSC Result</label>
+                <input asp-for="SSC.Result" class="form-control" />
+                <span asp-validation-for="SSC.Result" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SSC.PassingYear" class="control-label">SSC Passing year</label>
+                <input asp-for="SSC.PassingYear" class="form-control" />
+                <span asp-validation-for="SSC.PassingYear" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="College" class="control-label"></label>
+                <input asp-for="College" class="form-control" />
+                <span asp-validation-for="College" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HSC.Board" class="control-label">HSC Board</label>
+                <select asp-for="HSC.Board" class="form-control" placeholder="---Select one---">
+                    
+                    <option value="Mymensignh">Mymensignh</option>
+                    <option value="Dhaka">Dhaka</option>
+                    <option value="Rajshahi">Rajshahi</option>
+                    <option value="BTEB">BTEB</option>
+                </select>
+                <span asp-validation-for="HSC.Board" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HSC.Roll" class="control-label">HSC Roll</label>
+                <input asp-for="HSC.Roll" class="form-control" />
+                <span asp-validation-for="HSC.Roll" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HSC.Section" class="control-label">Section</label>
+                <select asp-for="HSC.Section" class="form-control" placeholder="---Select one---">
+                    
+                    <option value="Science">Science</option>
+                    <option value="Arts">Arts</option>
+                    <option value="Commerce">Commerce</option>
+                    <option value="Tecnical Education">Tecnical Education</option>
+                </select>
+                <span asp-validation-for="HSC.Section" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HSC.Result" class="control-label">HSC Result</label>
+                <input asp-for="HSC.Result" class="form-control" />
+                <span asp-validation-for="HSC.Result" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HSC.PassingYear" class="control-label">HSC Passing year</label>
+                <input asp-for="HSC.PassingYear" class="form-control" />
+                <span asp-validation-for="HSC.PassingYear" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Register" class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
