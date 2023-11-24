@@ -1,5 +1,7 @@
 ﻿using AdmissionRegistrationSystem.Data;
 using AdmissionRegistrationSystem.Models;
+using Firebase.Auth;
+using Firebase.Storage;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol;
 using System.Diagnostics;
@@ -11,6 +13,14 @@ namespace AdmissionRegistrationSystem.Controllers
 
         private readonly ARSDBContext _context;
 
+        private static string ApiKey = "AIzaSyCP29mIrHZQLZqHUcyaRIAhO3r7hb-EmH8";
+        private static string Bucket = "let-s-chat-16cb3.appspot.com";
+        private static string AuthEmail = "ars@test.com";
+        private static string AuthPassword = "1212345";
+
+        private string ImageUrl = "";
+        private Guid? rId;
+
         public RegistrationsController(ARSDBContext context)
         {
             _context = context;
@@ -21,40 +31,41 @@ namespace AdmissionRegistrationSystem.Controllers
             return View();
         }
 
-        /*[HttpPost]
-        public ActionResult UploadImage(HttpPostedFileBase imageFile)
+        public IActionResult Success(Guid? rId) {
+            ViewData["RegId"] = rId;
+
+            if (rId == null)
+            {
+                return RedirectToAction("Error");
+            }
+            else { 
+                return View();       
+            }
+        }
+
+        public IActionResult Error()
         {
-            if (imageFile != null && imageFile.ContentLength > 0)
-            {
-                // Process the uploaded image
-                var fileName = Path.GetFileName(imageFile.FileName);
-                var path = Path.Combine(Server.MapPath("~/Content/Images"), fileName);
-                imageFile.SaveAs(path);
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
 
-                // Save the image file information to the database or perform any necessary processing
-                // ...
 
-                return RedirectToAction("Index"); // Redirect to the index action after successful upload
-            }
-            else
-            {
-                // Handle any errors or invalid file uploads
-                return View("Error"); // Redirect to an error page if no file was uploaded
-            }
-        }*/
-
+        ///takes the image from ui to process
         [HttpPost]
-        public ActionResult ProcessImage()
+        public async Task<ActionResult> ProcessImage()
         {
             try
             {
                 IFormFile file = Request.Form.Files[0];
 
-                // Process the file as needed
-                // For example, save the file or perform other operations
                 Debug.Print("got the file!");
-                
-                return Json(new { success = true, message = "Image processed successfully", url= "https://firebasestorage.googleapis.com/v0/b/let-s-chat-16cb3.appspot.com/o/ars%2Fplaceholder.png?alt=media&token=58df47c8-2773-4f21-8f60-de7b029e1280" });
+
+                FileStream stream = await ConvertIFormFileToFileStream(file);
+                Debug.Print("converted");
+
+                ImageUrl = await UploadFile(stream, file.FileName);
+                Debug.Print("uploaded: "+ImageUrl);
+
+                return Json(new { success = true, message = "Image processed successfully", url= ImageUrl });
             }
             catch (Exception ex)
             {
@@ -62,7 +73,51 @@ namespace AdmissionRegistrationSystem.Controllers
             }
         }
 
+        ///converts the image to file stream
+        public async Task<FileStream> ConvertIFormFileToFileStream(IFormFile file)
+        {
+            // Create a temporary file.
+            string tempFilePath = Path.GetTempFileName();
 
+            // Save the uploaded file to the temporary file.
+            using (FileStream tempFileStream = new FileStream(tempFilePath, FileMode.Create))
+            {
+                await file.CopyToAsync(tempFileStream);
+            }
+
+            // Open the temporary file for reading.
+            FileStream fileStream = new FileStream(tempFilePath, FileMode.Open);
+
+            // Return the file stream.
+            return fileStream;
+        }
+         
+        ///uploads the file to the firebase storage
+        public async Task<string> UploadFile(FileStream stream, string fileName)
+        {
+            string link = "";
+            var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
+            var a = await auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword);
+            var cancellation = new CancellationTokenSource();
+
+            var task = new FirebaseStorage(Bucket, new FirebaseStorageOptions
+            {
+                AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
+                ThrowOnCancel = true
+            }).Child("ars").Child(fileName).PutAsync(stream, cancellation.Token);
+            try
+            {
+                link = await task;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return link;
+        }
+
+
+        ///submit button action
         [HttpPost]
         public async Task<IActionResult> IndexAsync(RegistrationModel registrationModel) {
 
@@ -74,9 +129,14 @@ namespace AdmissionRegistrationSystem.Controllers
                 {
                     Debug.Print("null");
                 }
-                Debug.Print("valid");
 
-               Debug.Print(registrationModel.ToJson());
+                Debug.Print("valid");
+                Debug.Print(registrationModel.ToJson());
+                _context.Add(registrationModel);
+                await _context.SaveChangesAsync();
+                /*return RedirectToAction("Home","Index");*/
+                return RedirectToAction("Success", new { rId = registrationModel.regId});
+
 
             }
             else {
@@ -90,7 +150,7 @@ namespace AdmissionRegistrationSystem.Controllers
                 }
 
             }
-            return View();
+            return RedirectToAction("Error");
         }
     }
 }

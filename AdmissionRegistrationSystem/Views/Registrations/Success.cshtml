@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "Success";
+}
+
+<h2>Success!</h2>
+<p>Your registration was successful. Thank you!</p>
+@if (ViewData["RegId"] != null)
+{
+    <p>Your Registration ID: @ViewData["RegId"]</p>
+    <p>Collect and store for future purpose.</p>
+}
+
+<a href="@Url.Action("Index", "Home")">Go to Home Page</a>
+
+@* <html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .success-container {
+            text-align: center;
+        }
+
+        .success-message {
+            font-size: 24px;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+        .check-mark {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background-color: #28a745;
+            border-radius: 50%;
+            position: relative;
+        }
+
+            .check-mark::before,
+            .check-mark::after {
+                content: '';
+                position: absolute;
+                background-color: #fff;
+            }
+
+            .check-mark::before {
+                width: 16px;
+                height: 3px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) rotate(-45deg);
+            }
+
+            .check-mark::after {
+                width: 28px;
+                height: 3px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) rotate(45deg);
+            }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <div class="success-message">Form submitted successfully!</div>
+        <div class="check-mark"></div>
+    </div>
+</body>
+</html>
+ *@
