@@ -4,41 +4,33 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 >Welcome to Admin Panel</h1>
 
-<p>
+@* <p>
     <a asp-action="Create">Create New</a>
-</p>
+</p> *@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.regId)
-            </th>
+            <th></th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhotoUrl)
-            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.FName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.MName)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.School)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.College)
-            </th>
-            <th>
+            
+            @* <th>
                 @Html.DisplayNameFor(model => model.PermAddress)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PresAddress)
-            </th>
+            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.DOB)
             </th>
@@ -54,12 +46,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.NID)
             </th>
-            <th>
+            @* <th>
                 @Html.DisplayNameFor(model => model.SSC)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.HSC)
-            </th>
+            </th> *@
             <th></th>
         </tr>
     </thead>
@@ -67,32 +59,27 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.regId)
-            </td>
+                <img src="@item.PhotoUrl" alt="User Photo" style="width: 50px; height: 50px;" />
+            </td>            
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            <td>
+            @* <td>
                 @Html.DisplayFor(modelItem => item.PhotoUrl)
-            </td>
+            </td> *@
             <td>
                 @Html.DisplayFor(modelItem => item.FName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MName)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.School)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.College)
-            </td>
-            <td>
+            
+            @* <td>
                 @Html.DisplayFor(modelItem => item.PermAddress.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PresAddress.Id)
-            </td>
+            </td> *@
             <td>
                 @Html.DisplayFor(modelItem => item.DOB)
             </td>
@@ -108,16 +95,16 @@
             <td>
                 @Html.DisplayFor(modelItem => item.NID)
             </td>
-            <td>
+            @* <td>
                 @Html.DisplayFor(modelItem => item.SSC.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.HSC.Id)
-            </td>
+            </td> *@
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @* <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> | *@
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> @* | *@
+                @* <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
             </td>
         </tr>
 }
