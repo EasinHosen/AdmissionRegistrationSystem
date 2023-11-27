@@ -12,10 +12,13 @@ namespace AdmissionRegistrationSystem.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(String userType)
         {
+            if (userType == null)
+            {
+                return Unauthorized();
+            }
             return _context.Registrations != null ? View(await _context.Registrations.ToListAsync()) : Problem("No data found!!");
-
 
         }
     }

@@ -19,16 +19,16 @@
             </th>
             
             <th>
-                @Html.DisplayNameFor(model => model.FName)
+                Father's name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MName)
+                Mother's name
             </th>
             
-            @* <th>
-                @Html.DisplayNameFor(model => model.PermAddress)
-            </th>
-            <th>
+            @*  <th>
+                Permanent Address
+            </th> *@
+            @*<th>
                 @Html.DisplayNameFor(model => model.PresAddress)
             </th> *@
             <th>
@@ -74,10 +74,10 @@
                 @Html.DisplayFor(modelItem => item.MName)
             </td>
             
-            @* <td>
-                @Html.DisplayFor(modelItem => item.PermAddress.Id)
-            </td>
-            <td>
+            @*  <td>
+                    @Html.DisplayFor(modelItem => item.PermAddress.Id), @Html.DisplayFor(modelItem => item.PermAddress.City), @Html.DisplayFor(modelItem => item.PermAddress.Area),
+            </td> *@
+          @*<td>
                 @Html.DisplayFor(modelItem => item.PresAddress.Id)
             </td> *@
             <td>

@@ -24,11 +24,11 @@ namespace AdmissionRegistrationSystem.Controllers
 
             var authenticate = await _context.Logins.FirstOrDefaultAsync(
                 m => m.UserName == login.UserName && m.Password == login.Password);
-            if (authenticate == null)
+            if (authenticate != null)
             {
-                return View();
+                return RedirectToAction("Index", "AdminPanel", new { userType = authenticate.UserType});
             }
-            return RedirectToAction("Index", "AdminPanel");
+            return Unauthorized();
         }
     }
 }
