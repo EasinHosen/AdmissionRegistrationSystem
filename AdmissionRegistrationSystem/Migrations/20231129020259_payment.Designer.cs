@@ -4,6 +4,7 @@ using AdmissionRegistrationSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdmissionRegistrationSystem.Migrations
 {
     [DbContext(typeof(ARSDBContext))]
-    partial class ARSDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231129020259_payment")]
+    partial class payment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,22 +94,20 @@ namespace AdmissionRegistrationSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("RegistrationId")
-                        .HasColumnType("int");
-
                     b.Property<string>("paymentStatus")
                         .IsRequired()
                         .HasMaxLength(63)
                         .HasColumnType("nvarchar(63)");
+
+                    b.Property<Guid>("regId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("transactionId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RegistrationId");
-
-                    b.ToTable("PaymentInfos");
+                    b.ToTable("PaymentInfo");
                 });
 
             modelBuilder.Entity("AdmissionRegistrationSystem.Models.PublicExamInfoModel", b =>
@@ -240,17 +241,6 @@ namespace AdmissionRegistrationSystem.Migrations
                     b.HasIndex("SSCId");
 
                     b.ToTable("Registrations");
-                });
-
-            modelBuilder.Entity("AdmissionRegistrationSystem.Models.PaymentInfoModel", b =>
-                {
-                    b.HasOne("AdmissionRegistrationSystem.Models.RegistrationModel", "Registration")
-                        .WithMany()
-                        .HasForeignKey("RegistrationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Registration");
                 });
 
             modelBuilder.Entity("AdmissionRegistrationSystem.Models.RegistrationModel", b =>

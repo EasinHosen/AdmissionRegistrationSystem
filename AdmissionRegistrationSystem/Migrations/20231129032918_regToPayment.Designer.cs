@@ -4,6 +4,7 @@ using AdmissionRegistrationSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdmissionRegistrationSystem.Migrations
 {
     [DbContext(typeof(ARSDBContext))]
-    partial class ARSDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231129032918_regToPayment")]
+    partial class regToPayment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,6 +101,9 @@ namespace AdmissionRegistrationSystem.Migrations
                         .IsRequired()
                         .HasMaxLength(63)
                         .HasColumnType("nvarchar(63)");
+
+                    b.Property<Guid>("regId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("transactionId")
                         .HasColumnType("uniqueidentifier");

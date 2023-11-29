@@ -11,5 +11,7 @@ namespace AdmissionRegistrationSystem.Data
         public DbSet<AdmissionRegistrationSystem.Models.RegistrationModel> Registrations { get; set; }
         public DbSet<AdmissionRegistrationSystem.Models.AddressInfoModel> Addresses { get; set; }
         public DbSet<AdmissionRegistrationSystem.Models.PublicExamInfoModel> ExamInfos { get; set; }
+        
+        public DbSet<AdmissionRegistrationSystem.Models.PaymentInfoModel> PaymentInfos { get; set; }
     }
 }
