@@ -1,4 +1,5 @@
 ﻿using AdmissionRegistrationSystem.Data;
+using AdmissionRegistrationSystem.Models;
 using AdmissionRegistrationSystem.PaymentGateway;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,6 @@ namespace AdmissionRegistrationSystem.Controllers
     public class PaymentsController : Controller
     {
         private readonly ARSDBContext _context;
-        protected string registrationID;
 
         public PaymentsController(ARSDBContext context)
         {
@@ -80,7 +80,7 @@ namespace AdmissionRegistrationSystem.Controllers
             return Redirect(response);
         }
 
-        public IActionResult PaymentConfirmation(string rId)
+        public async Task<IActionResult> PaymentConfirmation(string rId)
         {
             Debug.Print("Rid in confirmation: "+rId);
             if (!(!String.IsNullOrEmpty(Request.Form["status"]) && Request.Form["status"] == "VALID"))
@@ -105,6 +105,16 @@ namespace AdmissionRegistrationSystem.Controllers
             var successInfo = $"Validation Response: {resonse}";
             ViewBag.SuccessInfo = successInfo;
 
+            var paymentModel = new PaymentInfoModel();
+            paymentModel.transactionId = new Guid(TrxID);
+            var reg = await _context.Registrations.FirstOrDefaultAsync(r => r.regId == new Guid(rId));
+            paymentModel.RegistrationId = reg.Id;
+            paymentModel.paymentStatus = "Completed";
+
+            _context.Add(paymentModel);
+            await _context.SaveChangesAsync();
+
+
             return View();
         }
         public IActionResult PaymentFail()
@@ -125,7 +135,6 @@ namespace AdmissionRegistrationSystem.Controllers
         {
             if (Guid.TryParse(regId, out _))
             {
-                registrationID = regId;
                 Guid id = new Guid(regId);
                 var authenticate = await _context.Registrations.FirstOrDefaultAsync(
                      m => m.regId == id);
