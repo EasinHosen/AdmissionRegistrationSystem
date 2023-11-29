@@ -18,7 +18,7 @@ namespace AdmissionRegistrationSystem.Models
         [StringLength(255)]
         public string Area { get; set; }
 
-        //public int ZipCode { get; set; }
+        public int ZipCode { get; set; }
 
     }
 }
