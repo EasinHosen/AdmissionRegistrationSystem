@@ -1,5 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Index";
+    var regIdValue = ViewData["RegId"]?.ToString() ?? string.Empty;
+    if (string.IsNullOrEmpty(regIdValue))
+    {
+        regIdValue = Context.Request.Query["regId"];
+    }
 }
 
 <div class="row">
@@ -7,7 +12,7 @@
         <form asp-action="Index" onsubmit="return validateForm()">
             <div class="form-group">
                 <label for="RegId" class="control-label">Enter your Registration ID</label>
-                <input type="text" id="regId" name="regId" class="form-control" required />
+                <input type="text" id="regId" name="regId" value="@regIdValue" class="form-control" required />
                 <div id="errorMessage" class="text-danger"></div>
             </div>
             <div class="form-group" style="margin-top:20px">
@@ -20,17 +25,12 @@
 <script>
     function validateForm() {
         var regId = document.getElementById('regId').value;
-
-        // You can customize this validation logic based on your requirements
         if (!regId) {
             document.getElementById('errorMessage').innerHTML = 'Please enter a valid Registration ID';
-            return false; // Prevent form submission
+            return false; 
         }
-
-        // Clear any previous error messages
         document.getElementById('errorMessage').innerHTML = '';
 
-        // If all validations pass, allow the form submission
         return true;
     }
 </script>
