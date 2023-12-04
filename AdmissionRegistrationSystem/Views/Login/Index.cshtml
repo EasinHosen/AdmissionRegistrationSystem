@@ -4,14 +4,25 @@
     ViewData["Title"] = "Login";
 }
 
-@* <h1>Index</h1>
+<style>
+    h1, hr {
+        text-align: center;
+    }
 
-<h4>LoginModel</h4> *@
-@* <hr /> *@
+    form {
+        text-align: left; /* Reset text alignment for the form */
+        max-width: 300px; /* Adjust the width as needed */
+        margin: 0 auto;
+    }
+</style>
+
+<h1>Login Portal For Admin</h1>
+
+<hr />
+
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 mx-auto">
         <form asp-action="Index">
-            
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="UserName" class="control-label"></label>
@@ -23,11 +34,6 @@
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-            @* <div class="form-group">
-                <label asp-for="UserType" class="control-label"></label>
-                <input asp-for="UserType" class="form-control" />
-                <span asp-validation-for="UserType" class="text-danger"></span>
-            </div> *@
             <div class="form-group" style="margin-top:20px">
                 <input type="submit" value="Login" class="btn btn-primary" />
             </div>
@@ -35,10 +41,8 @@
     </div>
 </div>
 
-@* <div>
-    <a asp-action="Index">Back to List</a>
-</div> *@
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
