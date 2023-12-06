@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "View application";
+    var Svalue = ViewData["Svalue"]?.ToString() ?? string.Empty;
+    if (string.IsNullOrEmpty(Svalue))
+    {
+        Svalue = Context.Request.Query["Svalue"];
+    }
+}
+<h1>@ViewData["Title"]</h1>
+<div class="row">
+    <div class="col-md-4">
+        <form aspasp-controller="Home" asp-action="Search" method="post">
+            <div class="form-group">
+                <label for="Svalue" class="control-label">Enter your Registration ID/Phone/Email</label>
+                <input type="text" id="Svalue" name="Svalue" class="form-control" required />
+                <div id="errorMessage" class="text-danger"></div>
+            </div>
+            <div class="form-group" style="margin-top:20px">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+ <script>
+    function validateForm() {
+        var sval = document.getElementById('Svalue').value;
+        console.log(sval);
+        if (!sval) {
+            document.getElementById('errorMessage').innerHTML = 'Please enter a valid Registration ID';
+            return false;
+        }
+        document.getElementById('errorMessage').innerHTML = '';
+
+        return true;
+    }
+</script> 
