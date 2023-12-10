@@ -1,0 +1,137 @@
+﻿@model AdmissionRegistrationSystem.Models.AdminViewDataModel
+
+@{
+    ViewData["Title"] = "ApplicationDetails";
+}
+<style>
+    .profile-image {
+        width: 100px; /* Adjust the width as needed */
+        height: 100px; /* Adjust the height as needed */
+        border: 2px solid #fff;
+    }
+</style>
+
+<h1>ApplicationDetails</h1>
+
+<div>
+    <hr />
+        <img src="@Model.registrations.PhotoUrl" alt="Profile Image" class="profile-image" />
+    <dl class="row">
+
+        <dt class = "col-sm-2">
+            Registration Id
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.registrations.regId)
+        </dd>
+        <dt class = "col-sm-2">
+            Payment Status
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.paymentStatus)
+        </dd>
+
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.registrations.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.registrations.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            Father's Name
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.registrations.FName)
+        </dd>
+        <dt class = "col-sm-2">
+            Mother's Name
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.registrations.MName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.registrations.School)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.registrations.School)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.registrations.College)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.registrations.College)
+        </dd>
+        <dt class = "col-sm-2">
+           Permanent Address
+        </dt>
+        <dd class = "col-sm-10">
+            Area- @Html.DisplayFor(model => model.registrations.PermAddress.Area)<br />
+            City- @Html.DisplayFor(model => model.registrations.PermAddress.City)<br />
+            District- @Html.DisplayFor(model => model.registrations.PermAddress.Provience)<br />
+            ZipCode- @Html.DisplayFor(model => model.registrations.PermAddress.ZipCode)
+        </dd>
+        <dt class = "col-sm-2">
+            Present Address
+        </dt>
+        <dd class = "col-sm-10">
+            @* @Html.DisplayFor(model => model.PresAddress.Area), 
+            @Html.DisplayFor(model => model.PresAddress.City), 
+            @Html.DisplayFor(model => model.PresAddress.Provience)-@Html.DisplayFor(model => model.PresAddress.ZipCode)  *@
+            Area- @Html.DisplayFor(model => model.registrations.PresAddress.Area)<br />
+            City- @Html.DisplayFor(model => model.registrations.PresAddress.City)<br />
+            District- @Html.DisplayFor(model => model.registrations.PresAddress.Provience)<br />
+            ZipCode- @Html.DisplayFor(model => model.registrations.PresAddress.ZipCode)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.registrations.DOB)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.registrations.DOB)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.registrations.Gender)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.registrations.Gender)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.registrations.Phone)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.registrations.Phone)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.registrations.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.registrations.Email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.registrations.NID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.registrations.NID)
+        </dd>
+        <dt class = "col-sm-2">
+            SSC
+        </dt>
+        <dd class = "col-sm-10">
+            Roll- @Html.DisplayFor(model => model.registrations.SSC.Roll),<br />
+            Board- @Html.DisplayFor(model => model.registrations.SSC.Board),<br />
+            Section- @Html.DisplayFor(model => model.registrations.SSC.Section),<br />
+            Result- @Html.DisplayFor(model => model.registrations.SSC.Result)<br />
+        </dd>
+        <dt class = "col-sm-2">
+            HSC
+        </dt>
+        <dd class = "col-sm-10">
+            Roll- @Html.DisplayFor(model => model.registrations.HSC.Roll),<br />
+            Board- @Html.DisplayFor(model => model.registrations.HSC.Board),<br />
+            Section- @Html.DisplayFor(model => model.registrations.HSC.Section),<br />
+            Result- @Html.DisplayFor(model => model.registrations.HSC.Result)<br />
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Back to Home</a>
+</div>

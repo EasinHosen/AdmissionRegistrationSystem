@@ -29,34 +29,79 @@ namespace AdmissionRegistrationSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Search(string Svalue) {
+        public async Task<IActionResult> Search(string Svalue)
+        {
             string type = DetermineInputType(Svalue);
-            //Debug.Print(type);
-            RegistrationModel reg = new RegistrationModel();
+            Debug.Print(type);
+
+            RegistrationModel reg;
+            AdminViewDataModel viewDataModel = new AdminViewDataModel();
+
             if (type == "Guid")
             {
-                reg = await _context.Registrations.FirstOrDefaultAsync(
-                    e => e.regId == Guid.Parse(Svalue)) ?? new RegistrationModel();
+                reg = await _context.Registrations.Include(r => r.PermAddress).Include(r => r.PresAddress).Include(s=> s.SSC).Include(h => h.HSC)
+                    .FirstOrDefaultAsync(e => e.regId == Guid.Parse(Svalue)) ?? new RegistrationModel();
+                var paymentInfo = await _context.PaymentInfos.FirstOrDefaultAsync(p => p.RegistrationId == reg.Id);
+                if (paymentInfo != null)
+                {
+                    viewDataModel.paymentStatus = paymentInfo.paymentStatus;
+                    viewDataModel.registrations = reg;
+                }
+
             }
-            if (type == "Phone")
+            else if (type == "Phone")
             {
-                reg = await _context.Registrations.FirstOrDefaultAsync(
-                    e => e.Phone == Svalue) ?? new RegistrationModel();
+                reg = await _context.Registrations.Include(r => r.PermAddress).Include(r => r.PresAddress).Include(s => s.SSC).Include(h => h.HSC)
+                    .FirstOrDefaultAsync(e => e.Phone == Svalue) ?? new RegistrationModel();
+                var paymentInfo = await _context.PaymentInfos.FirstOrDefaultAsync(p => p.RegistrationId == reg.Id);
+                if (paymentInfo != null)
+                {
+                    viewDataModel.paymentStatus = paymentInfo.paymentStatus;
+                    viewDataModel.registrations = reg;
+                }
             }
-            if (type == "Email") {
-                reg = await _context.Registrations.FirstOrDefaultAsync(
-                    e => e.Email == Svalue) ?? new RegistrationModel();
-            }
-            if (type == "Unknown")
+            else if (type == "Email")
             {
-                Debug.Print("Reg not found");
+                reg = await _context.Registrations.Include(r => r.PermAddress).Include(r => r.PresAddress).Include(s => s.SSC).Include(h => h.HSC)
+                    .FirstOrDefaultAsync(e => e.Email == Svalue) ?? new RegistrationModel();
+                var paymentInfo = await _context.PaymentInfos.FirstOrDefaultAsync(p => p.RegistrationId == reg.Id);
+                if (paymentInfo != null)
+                {
+                    viewDataModel.paymentStatus = paymentInfo.paymentStatus;
+                    viewDataModel.registrations = reg;
+                }
             }
-            else { 
-                Debug.Print("Reg found: " + reg.Name);
+            else
+            {
+                // Invalid input type
+                return BadRequest("Invalid input. Please enter a valid Registration ID, Phone number, or Email.");
             }
 
-            return View("ViewApplication");
+            // Check if RegistrationModel is not found
+            if (reg == null || reg.Id == 0)
+            {
+                // Data not found
+                return NotFound("Data not found for the given input.");
+            }
+
+            return View("ApplicationDetails", viewDataModel);
         }
+
+
+        /*public async Task<IActionResult> ApplicationDetails(int id)
+        {
+            Debug.Print("appdet");
+            Debug.Print(id.ToString());
+            var reg = await _context.Registrations.Include(r => r.PermAddress).Include(r => r.PermAddress)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (reg != null)
+            {
+                Debug.Print(reg.Name);
+                return View(reg);
+            }
+            
+            return NotFound();
+        }*/
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
