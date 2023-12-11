@@ -141,18 +141,22 @@ namespace AdmissionRegistrationSystem.Controllers
                 if (authenticate != null)
                 {
                     Debug.Print("Id matched!");
-                    return RedirectToAction("PaymentGateway", new { rId = regId});
+                    return RedirectToAction("PaymentGateway", new { rId = regId });
                 }
                 else
                 {
-                    Debug.Print("Id did not matched!");
+                    Debug.Print("Id did not match!");
+                    ViewData["IdNotFoundError"] = "Registration ID not found.";
                 }
             }
-            else {
-                Debug.Print("invalid reg Id");
+            else
+            {
+                Debug.Print("Invalid reg Id");
+                ViewData["InvalidIdError"] = "Invalid Registration ID format.";
             }
-            
+
             return View();
         }
+
     }
 }
