@@ -47,6 +47,10 @@ namespace AdmissionRegistrationSystem.Controllers
                     viewDataModel.paymentStatus = paymentInfo.paymentStatus;
                     viewDataModel.registrations = reg;
                 }
+                else {
+                    viewDataModel.paymentStatus = "Pending";
+                    viewDataModel.registrations = reg;
+                }
 
             }
             else if (type == "Phone")
@@ -59,6 +63,11 @@ namespace AdmissionRegistrationSystem.Controllers
                     viewDataModel.paymentStatus = paymentInfo.paymentStatus;
                     viewDataModel.registrations = reg;
                 }
+                else
+                {
+                    viewDataModel.paymentStatus = "Pending";
+                    viewDataModel.registrations = reg;
+                }
             }
             else if (type == "Email")
             {
@@ -68,6 +77,11 @@ namespace AdmissionRegistrationSystem.Controllers
                 if (paymentInfo != null)
                 {
                     viewDataModel.paymentStatus = paymentInfo.paymentStatus;
+                    viewDataModel.registrations = reg;
+                }
+                else
+                {
+                    viewDataModel.paymentStatus = "Pending";
                     viewDataModel.registrations = reg;
                 }
             }
