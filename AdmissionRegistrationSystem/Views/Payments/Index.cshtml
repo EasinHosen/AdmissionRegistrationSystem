@@ -28,6 +28,10 @@
         {
             <div class="text-danger">@ViewData["IdNotFoundError"]</div>
         }
+        @if (ViewData["AlreadyPaid"] != null)
+        {
+            <div class="text-danger">@ViewData["AlreadyPaid"]</div>
+        }
     </div>
 </div>
 

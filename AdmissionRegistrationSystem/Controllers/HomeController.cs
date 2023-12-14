@@ -154,5 +154,10 @@ namespace AdmissionRegistrationSystem.Controllers
             var emailRegex = new Regex(@"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$");
             return emailRegex.IsMatch(input);
         }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
     }
 }

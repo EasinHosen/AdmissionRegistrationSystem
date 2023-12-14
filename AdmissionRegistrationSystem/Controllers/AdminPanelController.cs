@@ -3,9 +3,6 @@ using AdmissionRegistrationSystem.Migrations;
 using AdmissionRegistrationSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Linq;
-using NuGet.Protocol;
-using System.Diagnostics;
 
 namespace AdmissionRegistrationSystem.Controllers
 {
@@ -59,6 +56,7 @@ namespace AdmissionRegistrationSystem.Controllers
                 if (paymentInfo != null)
                 {
                     viewDataModel.paymentStatus = paymentInfo.paymentStatus;
+                viewDataModel.transaactionId = paymentInfo.transactionId;
                     viewDataModel.registrations = reg;
                 }
                 else

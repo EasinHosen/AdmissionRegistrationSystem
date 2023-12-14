@@ -133,17 +133,17 @@
                 <select asp-for="SSC.Section" class="form-control" placeholder="---Select one---">
                         <option value="">---Select one---</option>
                     <option value="Science">Science</option>
-                    <option value="Arts">Arts</option>
-                    <option value="Commerce">Commerce</option>
+                    @* <option value="Arts">Arts</option>
+                    <option value="Commerce">Commerce</option> *@
                     <option value="Vocational">Vocational</option>
                 </select>
                 <span asp-validation-for="SSC.Section" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="SSC.Result" class="control-label">SSC Result</label>
-                <input asp-for="SSC.Result" class="form-control" onkeypress="return isDecimalFormatKey(event)" />
-                <span asp-validation-for="SSC.Result" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="SSC.Result" class="control-label">SSC Result</label>
+                    <input asp-for="SSC.Result" class="form-control" onkeypress="return isDecimalFormatKey(event)" />
+                    <span asp-validation-for="SSC.Result" class="text-danger"></span>
+                </div>
             <div class="form-group">
                 <label asp-for="SSC.PassingYear" class="control-label">SSC Passing year</label>
                 <input asp-for="SSC.PassingYear" class="form-control" onkeypress="return isNumberKey(event)" />
@@ -183,8 +183,8 @@
 
                         <option value="">---Select one---</option>
                     <option value="Science">Science</option>
-                    <option value="Arts">Arts</option>
-                    <option value="Commerce">Commerce</option>
+                    @* <option value="Arts">Arts</option>
+                    <option value="Commerce">Commerce</option> *@
                     <option value="Tecnical Education">Tecnical Education</option>
                 </select>
                 <span asp-validation-for="HSC.Section" class="text-danger"></span>
@@ -240,14 +240,14 @@
                     }
                 }
 
-                function validateForm() {
-                    if ($('#PhotoUrl').val() === '') {
-                        $('#errorMessage').text('Please upload a photo before submitting the form.');
-                        return false;
-                    }
+                    function validateForm() {
+                        if ($('#PhotoUrl').val() === '') {
+                            $('#errorMessage').text('Please upload a photo before submitting the form.');
+                            return false;
+                        }
 
-                    return true; 
-                }
+                        return true;
+                    }
 
                 $(document).ready(function () {
                     $('#registrationForm').submit(function () {

@@ -102,7 +102,7 @@ namespace AdmissionRegistrationSystem.Controllers
 
             SSLCommerzGatewayProcessor sslcz = new SSLCommerzGatewayProcessor(storeId, storePassword, true);
             var resonse = sslcz.OrderValidate(TrxID, amount, currency, Request);
-            var successInfo = $"Validation Response: {resonse}";
+            var successInfo = $"Payment Successful!!";
             ViewBag.SuccessInfo = successInfo;
 
             var paymentModel = new PaymentInfoModel();
@@ -141,7 +141,14 @@ namespace AdmissionRegistrationSystem.Controllers
                 if (authenticate != null)
                 {
                     Debug.Print("Id matched!");
-                    return RedirectToAction("PaymentGateway", new { rId = regId });
+                    var paid = await _context.PaymentInfos.FirstOrDefaultAsync(p => p.RegistrationId == authenticate.Id);
+                    if (paid != null)
+                    {
+                        ViewData["AlreadyPaid"] = "Payment was already done for this Id.";
+                    }
+                    else {
+                        return RedirectToAction("PaymentGateway", new { rId = regId });
+                    }
                 }
                 else
                 {
