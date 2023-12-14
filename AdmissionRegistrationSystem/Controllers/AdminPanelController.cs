@@ -1,7 +1,9 @@
 ﻿using AdmissionRegistrationSystem.Data;
+using AdmissionRegistrationSystem.Migrations;
 using AdmissionRegistrationSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using NuGet.Protocol;
 using System.Diagnostics;
 
@@ -46,6 +48,29 @@ namespace AdmissionRegistrationSystem.Controllers
 
             return _context.Registrations != null ? View(dataList) : Problem("No data found!!");
 
+        }
+
+        public async Task<IActionResult> Details(int? id) {
+            RegistrationModel reg;
+            AdminViewDataModel viewDataModel = new AdminViewDataModel();
+
+                reg = await _context.Registrations.Include(r => r.PermAddress).Include(r => r.PresAddress).Include(s => s.SSC).Include(h => h.HSC).FirstOrDefaultAsync(e => e.Id == id) ?? new RegistrationModel();
+                var paymentInfo = await _context.PaymentInfos.FirstOrDefaultAsync(p => p.RegistrationId == reg.Id);
+                if (paymentInfo != null)
+                {
+                    viewDataModel.paymentStatus = paymentInfo.paymentStatus;
+                    viewDataModel.registrations = reg;
+                }
+                else
+                {
+                    viewDataModel.paymentStatus = "Pending";
+                    viewDataModel.registrations = reg;
+                }
+
+                if (reg == null || viewDataModel == null) {
+                return NotFound();
+            }
+            return View("DetailsView", viewDataModel);
         }
     }
 }
